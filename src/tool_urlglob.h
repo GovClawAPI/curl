@@ -33,6 +33,7 @@ typedef enum {
 
 struct URLPattern {
   globtype type;
+  char *name;    /* if not NULL */
   int globindex; /* the number of this particular glob or -1 if not used
                     within {} or [] */
   union {
@@ -70,6 +71,11 @@ struct URLGlob {
   const char *error; /* error message */
   size_t pos;        /* column position of error or 0 */
 };
+
+struct URLPattern *glob_find_name(struct URLGlob *glob,
+                                  struct Curl_str *name);
+void glob_show_error(struct URLGlob *glob, const char *url, FILE *error,
+                     CURLcode result);
 
 CURLcode glob_url(struct URLGlob *glob, const char *url, curl_off_t *urlnum,
                   FILE *error);
