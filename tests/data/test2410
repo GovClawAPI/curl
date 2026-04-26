@@ -26,9 +26,9 @@ duplicate named glob
 # Verify data after the test has been "shot"
 <verify>
 <stderr mode="text">
-curl: (3) Duplicate glob name in position 34:
+curl: (3) Duplicate glob name in position 30:
 %HOSTIP:%HTTPPORT/{%LTtest%GTA,B}{%LTtest%GTC,D}
-                                 ^
+                             ^
 </stderr>
 <errorcode>
 3
