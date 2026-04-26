@@ -512,7 +512,10 @@ static CURLcode glob_parse(struct URLGlob *glob, const char *pattern,
         if(curlx_str_single(&pattern, '<') ||
            curlx_str_until(&pattern, &name, MAX_GLOBNAME_LEN, '>') ||
            curlx_str_single(&pattern, '>')) {
-          /* not a proper name */
+          /* Not a proper name. This is not reporting errors on syntax errors
+             on purpose: it means that if there is an existing use case that
+             uses what looks like a broken named-glob syntax (now introduced)
+             we let that function like before. */
           curlx_str_init(&name);
           pattern = start; /* reset any partial patch */
         }
