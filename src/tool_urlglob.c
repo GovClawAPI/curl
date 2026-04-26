@@ -423,6 +423,22 @@ static CURLcode add_glob(struct URLGlob *glob, size_t pos)
   return CURLE_OK;
 }
 
+/* returns the named glob pattern (case sensitively) if it exists, otherwise
+   NULL
+*/
+static struct URLPattern *glob_find_name(struct URLGlob *glob,
+                                         struct Curl_str *name)
+{
+  size_t i;
+  /* find the correct glob entry */
+  for(i = 0; i < glob->pnum; i++) {
+    if(glob->pattern[i].name &&
+       curlx_str_cmp(name, glob->pattern[i].name))
+      return &glob->pattern[i];
+  }
+  return NULL; /* no match */
+}
+
 #define MAX_GLOBNAME_LEN 64
 
 static CURLcode glob_parse(struct URLGlob *glob, const char *pattern,
@@ -680,22 +696,6 @@ CURLcode glob_next_url(char **globbed, struct URLGlob *glob)
 }
 
 #define MAX_OUTPUT_GLOB_LENGTH (1024 * 1024)
-
-/* returns the named glob pattern (case sensitively) if it exists, otherwise
-   NULL
-*/
-struct URLPattern *glob_find_name(struct URLGlob *glob,
-                                  struct Curl_str *name)
-{
-  size_t i;
-  /* find the correct glob entry */
-  for(i = 0; i < glob->pnum; i++) {
-    if(glob->pattern[i].name &&
-       curlx_str_cmp(name, glob->pattern[i].name))
-      return &glob->pattern[i];
-  }
-  return NULL; /* no match */
-}
 
 CURLcode glob_match_url(char **output, const char *filename,
                         struct URLGlob *glob, SANITIZEcode *sc)

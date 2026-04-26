@@ -72,8 +72,6 @@ struct URLGlob {
   size_t pos;        /* column position of error or 0 */
 };
 
-struct URLPattern *glob_find_name(struct URLGlob *glob,
-                                  struct Curl_str *name);
 void glob_show_error(struct URLGlob *glob, const char *url, FILE *error,
                      CURLcode result);
 
