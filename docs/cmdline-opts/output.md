@@ -76,6 +76,7 @@ enclosed within angle brackets after the opening character. Examples:
 
     curl "https://fun.example/{<num>one,two}.jpg" -o "save-#<num>"
 
-    curl ftp://ftp.example/file[<range>1-100].txt -o "#<range>.txt"
+    curl "ftp://ftp.example/file[<range>1-100].txt" \
+      -o "save-#<range>.txt"
 
 Referencing a named glob that is not set, causes an error.
